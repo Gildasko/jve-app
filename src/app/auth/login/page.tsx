@@ -39,8 +39,8 @@ const LoginPage = () => {
         localStorage.setItem('supabase_session', JSON.stringify(data.session));
       }
 
-      // Rediriger vers le tableau de bord
-      router.push('/dashboard');
+      // Rediriger vers le tableau de bord (avec refresh pour mettre à jour la navbar)
+      window.location.href = '/dashboard';
     } catch (err: any) {
       setError(err.message);
     } finally {

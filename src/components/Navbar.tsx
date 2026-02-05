@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface UserProfile {
   role?: string;
@@ -10,7 +9,6 @@ interface UserProfile {
 }
 
 const Navbar = () => {
-  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -46,7 +44,7 @@ const Navbar = () => {
     localStorage.removeItem('supabase_session');
     setIsLoggedIn(false);
     setProfile(null);
-    router.push('/');
+    window.location.href = '/';
   };
 
   // Affichage par défaut côté serveur (non connecté)
