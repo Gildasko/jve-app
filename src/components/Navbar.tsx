@@ -14,6 +14,7 @@ const Navbar = () => {
   const [mounted, setMounted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
@@ -38,6 +39,7 @@ const Navbar = () => {
         console.error('Erreur:', error);
       }
     }
+    setIsLoading(false);
   };
 
   const handleLogout = () => {
@@ -49,21 +51,13 @@ const Navbar = () => {
 
   // Affichage par défaut côté serveur (non connecté)
   const renderAuthButtons = () => {
-    if (!mounted) {
-      // Rendu côté serveur - afficher les boutons par défaut
+    if (!mounted || isLoading) {
+      // Rendu côté serveur ou chargement - afficher un placeholder
       return (
-        <>
-          <Link href="/auth/login">
-            <span className="px-4 py-2 text-sm font-semibold text-green-800 bg-white border border-green-800 rounded-md hover:bg-green-50">
-              Connexion
-            </span>
-          </Link>
-          <Link href="/auth/signup">
-            <span className="px-4 py-2 text-sm font-semibold text-white bg-green-600 rounded-md hover:bg-green-700">
-              Inscription
-            </span>
-          </Link>
-        </>
+        <div className="flex items-center space-x-4">
+          <div className="w-24 h-8 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="w-24 h-8 bg-gray-200 rounded-md animate-pulse"></div>
+        </div>
       );
     }
 
